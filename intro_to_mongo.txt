@@ -1,0 +1,65 @@
+* List all databases    
+    > show dbs
+    admin  0.000GB
+    local  0.000GB
+
+* Switch to (or create if it doesn't already exist) a selected database
+    > use my_first_db
+    switched to db my_first_db
+
+* Create a collection (table)
+    > db.createCollection('students')
+    { "ok" : 1 }
+
+* Create documents (rows) for the collection
+    > db.students.insert({name: 'Xerxes', home_state: 'New York', lucky_number: 315, birthday: {month: 5, day: 29, year: 1978}})
+    WriteResult({ "nInserted" : 1 })
+
+* Get all documents from a collection
+    > db.students.find().pretty()
+    {
+        "_id" : ObjectId("5984c9167c89fdd58305d4c6"),
+        "name" : "Alyssa",
+        "home_state" : "Illinois",
+        "lucky_number" : 24,
+        "birthday" : {
+            "month" : 9,
+            "day" : 24,
+            "year" : 1980
+        }
+    }
+
+
+* Get students based on a field value
+    > db.students.find({home_state: 'California'})
+
+* Get students based on number comparisons
+    > db.students.find({lucky_number: {$gt: 4}})
+    > db.students.find({lucky_number: {$lte: 10}})
+    > db.students.find({lucky_number: {$gte: 1, $lte:9}})
+
+* Add a field to all documents in a collection (in one line)
+    > db.students.update({}, {$set: {interests: ['coding', 'brunch', 'MongoDB']}}, {multi: true})
+
+* Add an element to an array stored in a field of a document
+    > db.students.update({name: 'Alyssa'}, {$push: {interests: 'KATG'}})
+
+* Remove documents based on a matching field (all documents that match)
+    > db.students.remove({home_state:'California'})
+
+* Remove the first document with a matching field
+    > db.students.remove({lucky_number: {$gt: 5}}, true)
+    ** NOTE: The true is the 'justOne' parameter and indicates that it should only be one removed.  By default this is false and will remove all matching documents
+
+* Increment a field for all students matching a criteria
+    > db.students.update({home_state: 'Illinois'}, {$inc: {number_of_belts: 1}}, {multi: true})
+
+* Rename a field for all documents
+    > db.students.update({}, {$rename: {number_of_belts: 'belts_earned'}}, {multi: true})
+
+* Remove a field for all documents 
+    > db.students.update({}, {$unset: {lucky_number: ''}}, {multi: true})
+
+* Add a field equal to the current date
+    > db.students.update({}, {$currentDate: {updated_on: true}}, {multi: true})
+    
