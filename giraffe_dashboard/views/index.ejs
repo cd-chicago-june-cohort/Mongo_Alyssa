@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Giraffes</title>
+</head>
+<body>
+    <h1>Look at all these awesome Giraffes!</h1>
+    <table class='table table-hover'>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (var i in giraffes) { %>
+                <tr>
+                    <td><a href="/giraffes/<%= giraffes[i]._id %>"><%= giraffes[i].name %></a></td>
+                    <td><%= giraffes[i].age %></td>
+                    <td><%= giraffes[i].description %></td>
+                    <td><a href="/giraffes/edit/<%= giraffes[i]._id %>">Update</a> | <a href="/giraffes/destroy/<%= giraffes[i]._id %>">Remove</a>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <a href="/giraffes/new"><button class='btn btn-info'>Add a new giraffe</button></a>
+</body>
+</html>
