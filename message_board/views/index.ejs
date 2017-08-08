@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Message Board</title>
+</head>
+<body>
+    <div class = 'container'>
+        <h1>The Dojo Message Board</h1>
+        <hr>
+        <% if (error) { %>
+            <p class ='text-uppercase text-danger'><%= error_message %></p>
+        <% } %>
+        <form action="/post_message" method="post">
+            <p>Name:</p>
+            <input type="text" name="name"></br>
+            <p>Message:</p>
+            <textarea name="message" cols="100" rows="2"></textarea></br>
+            <input type="submit" value="Post Message">
+        </form>
+        <div style="margin-left: 40px">
+            <% if (messages) { %>
+                <% for (var i in messages) { %>
+                    <h3>Name: <%= messages[i].name %></h3>
+                    <h3>Message: <%= messages[i].message %></h3>
+                    <div style="margin-left: 40px">
+                        <% for (var j in messages[i]._comments) { %>
+                        <p>Name: <%= messages[i]._comments[j]['name'] %></p>
+                        <p>Comment: <%= messages[i]._comments[j]['comment'] %></p> 
+                        <% } %>
+                    </div>
+                    <form action="/post_comment/<%= messages[i]._id %>" method="post">
+                        <p>Name:</p>
+                        <input type="text" name="name"></br>
+                        <p>Comment:</p>
+                        <textarea name="comment" cols="95" rows="2"></textarea></br>
+                        <input type="submit" value="Post Comment">
+                    </form>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
