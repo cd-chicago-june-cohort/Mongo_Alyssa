@@ -1,5 +1,3 @@
-var mongoose = require('mongoose');
-
 var giraffes = require('../controllers/giraffes.js');
 
 module.exports = function(app) {
